@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Detalhes do Pedido</h1>
+<mat-dialog-content>
+  <div>
+    <h3>Informações do Pedido</h3>
+    <p><strong>Nome do Cliente:</strong> {{data.nomeCliente}}</p>
+    <p><strong>Email do Cliente:</strong> {{data.emailCliente}}</p>
+    <p><strong>Valor Total:</strong> {{data.valorTotal | currency}}</p>
+    <mat-table [dataSource]="data.itensPedido" class="mat-elevation-z8">
+      <!-- Nome do Produto Column -->
+      <ng-container matColumnDef="nomeProduto">
+        <mat-header-cell *matHeaderCellDef> Nome do Produto </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.nomeProduto}} </mat-cell>
+      </ng-container>
+
+      <!-- Valor Unitário Column -->
+      <ng-container matColumnDef="valorUnitario">
+        <mat-header-cell *matHeaderCellDef> Valor Unitário </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.valorUnitario | currency}} </mat-cell>
+      </ng-container>
+
+      <!-- Quantidade Column -->
+      <ng-container matColumnDef="quantidade">
+        <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.quantidade}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['nomeProduto', 'valorUnitario', 'quantidade']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['nomeProduto', 'valorUnitario', 'quantidade']"></mat-row>
+    </mat-table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Fechar</button>
+</mat-dialog-actions>

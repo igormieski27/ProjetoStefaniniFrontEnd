@@ -1,0 +1,24 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ isEditMode ? 'Editar Produto' : 'Criar Novo Produto' }}</h2>
+
+    <form>
+        <mat-form-field appearance="fill">
+            <mat-label>Nome do Produto</mat-label>
+            <input matInput [(ngModel)]="nomeProduto" name="nomeProduto" required minlength="3">
+            <mat-error *ngIf="nomeProduto && nomeProduto.length < 3">O nome deve ter no mínimo 3 caracteres.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Valor</mat-label>
+            <input matInput [(ngModel)]="valor" name="valor" type="number" required min="0.01">
+            <mat-error *ngIf="valor && valor <= 0">O valor deve ser maior que zero.</mat-error>
+        </mat-form-field>
+
+        <input type="hidden" [(ngModel)]="produtoId" name="produtoId">
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+            <button mat-raised-button color="primary" [disabled]="!isFormValid()" (click)="onSave()">{{ isEditMode ? 'Atualizar' : 'Salvar' }}</button>
+        </div>
+    </form>
+</div>

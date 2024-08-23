@@ -1,0 +1,107 @@
+<div style="margin:25px;">
+    <h4>ProjetoStefaniniAPI</h4>
+</div>
+
+<div class="container" style="width:85%; margin-left: 5%;">
+
+    <mat-toolbar>
+        <button mat-raised-button color="primary" (click)="openCreateDialog()">
+            <mat-icon>shopping_cart</mat-icon>
+            Criar Novo Pedido
+        </button>
+        <button mat-raised-button color="accent" (click)="openCreateProdutoDialog()">
+            <mat-icon>inventory</mat-icon>
+            Criar Novo Produto
+        </button>
+    </mat-toolbar>
+
+    <mat-tab-group>
+        <mat-tab label="Pedidos">
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Nome Cliente Column -->
+                <ng-container matColumnDef="nomeCliente">
+                    <mat-header-cell *matHeaderCellDef> Nome Cliente </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nomeCliente}} </mat-cell>
+                </ng-container>
+
+                <!-- Email Cliente Column -->
+                <ng-container matColumnDef="emailCliente">
+                    <mat-header-cell *matHeaderCellDef> Email Cliente </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.emailCliente}} </mat-cell>
+                </ng-container>
+
+                <!-- Pagamento Column -->
+                <ng-container matColumnDef="pago">
+                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-icon [ngClass]="{'mat-icon-green': element.pago, 'mat-icon-gray': !element.pago}"
+                            matTooltip="{{element.pago ? 'Pago' : 'Pendente'}}">attach_money</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Ações Column -->
+                <ng-container matColumnDef="acoes">
+                    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="openDetailDialog(element.id)">
+                            <mat-icon matTooltip="Detalhes do pedido">visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="deletePedido(element.id)">
+                            <mat-icon matTooltip="Excluir Pedido">delete</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="editPedido(element.id)">
+                            <mat-icon matTooltip="Editar Pedido">edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </mat-tab>
+
+        <mat-tab label="Produtos">
+            <mat-table [dataSource]="produtoDataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Nome Produto Column -->
+                <ng-container matColumnDef="nomeProduto">
+                    <mat-header-cell *matHeaderCellDef> Nome do Produto </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nomeProduto}} </mat-cell>
+                </ng-container>
+
+                <!-- Valor Column -->
+                <ng-container matColumnDef="valor">
+                    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.valor | currency}} </mat-cell>
+                </ng-container>
+
+                <!-- Ações Column -->
+                <ng-container matColumnDef="acoes">
+                    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="deleteProduto(element.id)">
+                            <mat-icon matTooltip="Excluir Produto">delete</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="editProduto(element.id)">
+                            <mat-icon matTooltip="Editar Produto">edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="produtoDisplayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: produtoDisplayedColumns;"></mat-row>
+            </mat-table>
+        </mat-tab>
+    </mat-tab-group>
+</div>
