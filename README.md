@@ -1,27 +1,48 @@
-# ProjetoStefaniniFrontEnd
+# Projeto Stefanini Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+Este é o frontend do Projeto Stefanini, desenvolvido em Angular. O projeto foi criado para gerenciar pedidos e produtos, com funcionalidades para criar, editar, listar e excluir pedidos e produtos.
 
-## Development server
+## Pré-requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Antes de começar, você precisa ter as seguintes ferramentas instaladas em sua máquina:
 
-## Code scaffolding
+- **Node.js**: [Download Node.js](https://nodejs.org/)
+- **Angular CLI**: Para instalar o Angular CLI, execute o comando:
+  
+  ```bash
+  npm install -g @angular/cli
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Configuração do Ambiente
 
-## Build
+Este projeto utiliza uma variável de ambiente para definir a URL da API backend. Essa configuração está localizada no arquivo src/environments/environment.ts.
+Estrutura do arquivo environment.ts
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  ```bash
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:44347/api'  // URL da API backend
+};
+```
 
-## Running unit tests
+## Backend (API)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+O backend deste projeto foi desenvolvido em C# (.NET Core) (https://github.com/igormieski27/ProjetoStefaniniAPI) e está configurado para aceitar requisições CORS apenas do endereço específico onde o frontend está rodando. No arquivo Program.cs, a configuração do CORS foi feita da seguinte forma:
+```bash
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // URL DO FRONTEND AQUI
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+```
 
-## Running end-to-end tests
+### Screenshots: 
+Listagem de Pedidos:
+![image](https://github.com/user-attachments/assets/6489b035-1902-4970-b42b-920f66d71623)
+Listagem de Produtos:
+![image](https://github.com/user-attachments/assets/1f7435e6-39b7-42cf-bd47-bd5ba9db33dc)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
